@@ -1,10 +1,10 @@
+{% extends "base.html" %}
+
 {% comment %}
 Copyright 2012, Vladimir Zapolskiy <vz@mleia.com> and other contributors
 Released under the BSD 3-Clause license
 http://opensource.org/licenses/BSD-3-Clause
 {% endcomment %}
-
-{% extends "base.html" %}
 
 {% load url from future %}
 {% load staticfiles %}
@@ -26,21 +26,21 @@ http://opensource.org/licenses/BSD-3-Clause
   </p>
 </div>
 <div>
-  <!-- http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously-with-jquery -->
   <form enctype="multipart/form-data" method="post">
     {% csrf_token %}
-    <!--
-    <input name="file" type="file" />
-    <input type="button" value="Upload" />
-    -->
-
     <p>{{ form.non_field_errors }}</p>
-    <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+    <!--
+    <p>{{ form.docfile.label_tag }}</p>
+    -->
+    <p>{{ form.docfile.help_text }}</p>
     <p>
       {{ form.docfile.errors }}
       {{ form.docfile }}
     </p>
     <input type="submit" value="Upload" />
+    <!--
+    <input type="button" value="Upload" />
+    -->
   </form>
   <!--
   <progress></progress>

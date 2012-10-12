@@ -83,13 +83,18 @@ def register(request):
                               context_instance=RequestContext(request))
 
 def user(request, user):
+    pictures = False
     context = { 'user' : user,
                 'authorized': request.user.is_authenticated() }
     p = get_object_or_404(models.User, username=user)
 
-    pictures = Photo.objects.all()
-    if pictures == []:
-        pictures = False
+    try:
+        pictures = Photo.objects.filter(user_id=p.id)
+        if pictures == []:
+            pictures = False
+    except Photo.DoesNotExist:
+        pass
+
     context['pictures'] = pictures
     return render_to_response('sight/user.html', context)
 
@@ -106,7 +111,8 @@ def upload(request, user):
     import shutil
     import datetime
 
-    FILE_UPLOAD_DIR = '/opt/webwm/sight/upload'
+    # HACK
+    FILE_UPLOAD_DIR = '/opt/webwm/sight/static/upload'
 
     def handle_uploaded_file(source):
         fd, filepath = tempfile.mkstemp(prefix = source.name + '_',
@@ -127,7 +133,7 @@ def upload(request, user):
             f = request.FILES['docfile']
             filepath = handle_uploaded_file(f)
 
-            # HACK
+            # HACK, continuation
             filepath = filepath[17:]
 
             u = get_object_or_404(models.User, username=user)

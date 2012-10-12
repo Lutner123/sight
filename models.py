@@ -31,12 +31,10 @@ class Album(models.Model):
                              on_delete=models.SET_NULL)
 
     def __unicode__(self):
-        return self.description
+        return unicode(self.description)
 
 class Photo(models.Model):
-    description = models.CharField(max_length=256,
-                                   blank=True,
-                                   null=True)
+    description = models.CharField(max_length=256)
     public = models.BooleanField(default=False)
     original = models.CharField(max_length=256)
     modified = models.CharField(max_length=256)
@@ -53,4 +51,4 @@ class Photo(models.Model):
     #                          on_delete=models.SET_NULL)
 
     def __unicode__(self):
-        return self.description
+        return unicode(self.description)
