@@ -1,0 +1,75 @@
+{% comment %}
+Copyright 2012, Vladimir Zapolskiy <vz@mleia.com> and other contributors
+Released under the BSD 3-Clause license
+http://opensource.org/licenses/BSD-3-Clause
+{% endcomment %}
+
+{% extends "base.html" %}
+
+{% load url from future %}
+
+{% block title %}Photo Sight{% endblock %}
+
+{% block content %}
+<div>
+  <p>
+    Photo Sight: Register a New Account
+  </p>
+</div>
+<div>
+  <a href="{% url 'sight.views.signin' %}">Sign in</a> if already registered
+</div>
+{% if error_acc_registered %}
+<p>
+  Unfortunately account "{{ account }}" is registered, please choose another
+  one.
+</p>
+{% elif error_acc_inval %}
+<p>
+  Unfortunately account name "{{ account }}" can't be used, please use
+  alphanumeric and underline symbols only.
+</p>
+{% elif error_email %}
+<p>
+  Email address is invalid, please correct it.
+</p>
+{% elif error_password %}
+<p>
+  Unfortunately passwords don't match, please repeat.
+</p>
+{% endif %}
+<div>
+  <form id="register"
+	action="{% url 'sight.views.register' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+      <legend>Your details</legend>
+      <ul>
+	<li>
+	  <label for=account>Account</label>
+	  <input id=account name=account type=text
+		 {% if account %}value="{{ account }}"{% endif %}
+		 required autofocus>
+	</li>
+	<li>
+	  <label for=email>Email</label>
+	  <input id=email name=email type=email
+		 {% if email %}value="{{ email }}"{% endif %}
+		 placeholder="example@domain.com" required>
+	</li>
+	<li>
+	  <label for=password>Password</label>
+	  <input id=password name=password type=password required>
+	</li>
+	<li>
+	  <label for=password2>Repeat Password</label>
+	  <input id=password2 name=password2 type=password required>
+	</li>
+      </ul>
+    </fieldset>
+    <fieldset>
+      <button type=submit>Submit</button>
+    </fieldset>
+  </form>
+</div>
+{% endblock %}

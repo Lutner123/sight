@@ -1,0 +1,52 @@
+{% comment %}
+Copyright 2012, Vladimir Zapolskiy <vz@mleia.com> and other contributors
+Released under the BSD 3-Clause license
+http://opensource.org/licenses/BSD-3-Clause
+{% endcomment %}
+
+{% extends "base.html" %}
+
+{% load url from future %}
+
+{% block title %}Photo Sight{% endblock %}
+
+{% block content %}
+{% if not authorized %}
+<div>
+  <p>
+    The user {{ user }} is not authorized or doesn't exist.
+  </p>
+  <p>
+    <a href="{% url 'sight.views.index' %}">Main page</a>
+  </p>
+</div>
+{% else %}
+<div>
+  <p>
+    Greetings {{ user }}, on your user page!
+  </p>
+  <p>
+    <a href="{% url 'sight.views.index' %}">Log out</a>
+  </p>
+  {% if pictures %}
+  <p>
+    List of uploaded pictures:
+  </p>
+  <ul>
+    {% for pic in pictures %}
+    <li>
+      <a href="{% url 'sight.views.modify' user pic.id %}">
+	{{ pic.description }} #{{ pic.id }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>
+    You haven't uploaded any pictures to the server.
+  </p>
+  {% endif %}
+  <a href="{% url 'sight.views.upload' user %}">Upload a new picture</a>
+</div>
+{% endif %}
+{% endblock %}

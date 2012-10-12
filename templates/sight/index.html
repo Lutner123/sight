@@ -1,0 +1,25 @@
+{% comment %}
+Copyright 2012, Vladimir Zapolskiy <vz@mleia.com> and other contributors
+Released under the BSD 3-Clause license
+http://opensource.org/licenses/BSD-3-Clause
+{% endcomment %}
+
+{% extends "base.html" %}
+
+{% load url from future %}
+
+{% block title %}Photo Sight{% endblock %}
+
+{% block content %}
+<div>
+  <p>
+    Welcome on Photo Sight!
+  <p>
+</div>
+<div>
+  <ul>
+    <li><a href="{% url 'sight.views.signin' %}">Sign In</a></li>
+    <li><a href="{% url 'sight.views.register' %}">Register</a></li>
+  </ul>
+</div>
+{% endblock %}

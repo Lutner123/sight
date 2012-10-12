@@ -1,0 +1,49 @@
+{% comment %}
+Copyright 2012, Vladimir Zapolskiy <vz@mleia.com> and other contributors
+Released under the BSD 3-Clause license
+http://opensource.org/licenses/BSD-3-Clause
+{% endcomment %}
+
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load staticfiles %}
+
+{% block title %}Photo Sight{% endblock %}
+
+{% block head %}
+<!--
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+-->
+<script type="text/javascript" src="{% static "js/jquery-v1.8.2.js" %}"></script>
+<script type="text/javascript" src="{% static "js/sight.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+<div>
+  <p>
+    Upload a picture:
+  </p>
+</div>
+<div>
+  <!-- http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously-with-jquery -->
+  <form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <!--
+    <input name="file" type="file" />
+    <input type="button" value="Upload" />
+    -->
+
+    <p>{{ form.non_field_errors }}</p>
+    <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+    <p>
+      {{ form.docfile.errors }}
+      {{ form.docfile }}
+    </p>
+    <input type="submit" value="Upload" />
+  </form>
+  <!--
+  <progress></progress>
+  -->
+</div>
+{% endblock %}

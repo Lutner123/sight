@@ -1,0 +1,57 @@
+{% comment %}
+Copyright 2012, Vladimir Zapolskiy <vz@mleia.com> and other contributors
+Released under the BSD 3-Clause license
+http://opensource.org/licenses/BSD-3-Clause
+{% endcomment %}
+
+{% extends "base.html" %}
+
+{% load url from future %}
+
+{% block title %}Photo Sight{% endblock %}
+
+{% block content %}
+<div>
+  <p>
+    Photo Sight: Sign in.
+  </p>
+</div>
+{% if registered %}
+<p>
+  User "{{ account }}" is registered successfully.
+</p>
+{% endif %}
+{% if error_acc_inval %}
+<p>
+  User "{{ account }}" doesn't exist or wrong password is provided.
+</p>
+{% elif error_acc_inactive %}
+<p>
+  User's account "{{ account }}" is inactive. Please activate it.
+</p>
+{% endif %}
+<div>
+  <form id="signin"
+	action="{% url 'sight.views.signin' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+      <legend>Enter your account name and password</legend>
+      <ul>
+	<li>
+	  <label for=account>Account</label>
+	  <input id=account name=account type=text
+		 {% if account %}value="{{ account }}"{% endif %}
+		 required autofocus>
+	</li>
+	<li>
+	  <label for=password>Password</label>
+	  <input id=password name=password type=password required>
+	</li>
+      </ul>
+    </fieldset>
+    <fieldset>
+      <button type=submit>Submit</button>
+    </fieldset>
+  </form>
+</div>
+{% endblock %}
